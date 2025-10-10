@@ -18,3 +18,20 @@
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        max_len, hashmap = 0, {} # 定义需要维护的变量
+        start = 0 # 定义窗口的首尾端 (start, end)
+        for end in range(len(s)):
+            hashmap[s[end]] = hashmap.get(s[end], 0) + 1 # 更新hashmap
+            if len(hashmap) == end - start + 1: # 窗口长度等于hashmap长度时，更新最大长度
+                max_len = max(max_len, end - start + 1)
+            while end - start + 1 > len(hashmap):
+                head = s[start]
+                hashmap[head] -= 1
+                if hashmap[head] == 0:
+                    del hashmap[head]
+                start += 1
+        return max_len
+s = Solution()
+print(s.lengthOfLongestSubstring("abcabcbb"))
+print(s.lengthOfLongestSubstring("bbbbb"))
+print(s.lengthOfLongestSubstring("pwwkew"))

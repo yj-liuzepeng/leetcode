@@ -14,13 +14,14 @@ from typing import List
 import math
 class Solution:
     def findMaxAverage(self, nums: List[int], k: int) -> float:
-        sum_, max_avg = 0, -math.inf
-        start = 0
+        sum_, max_avg = 0, -math.inf # 定义需要维护的变量
+        start = 0 #定义窗口的首尾端 (start, end)
         for end in range(len(nums)):
+            # 滑动窗口
             sum_ += nums[end]
-            if end - start + 1 == k:
+            if end - start + 1 == k: # 窗口长度到达k时，计算平均数
                 max_avg = max(max_avg, sum_ / k)
-            if end >= k - 1:
+            if end >= k - 1: # 窗口长度大于k时，移除窗口首元素
                 sum_ -= nums[start]
                 start += 1
         return max_avg
@@ -28,3 +29,6 @@ class Solution:
 nums = [1,12,-5,-6,50,3]
 k = 4
 print(Solution().findMaxAverage(nums, k))
+nums1 = [5,3,4,1,2]
+k1 = 2
+print(Solution().findMaxAverage(nums1, k1))
